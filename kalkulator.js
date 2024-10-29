@@ -42,7 +42,20 @@ $(function () {
       operasiSelected = newOperasi;
     }  
   });
+  $(".tombol-faktorial").click(function() {
+    operasiSelected = "!";
+    $("#operasi-selected").text("!");
+  });
 
+  function factorial(n) {
+    if (n < 0) return "Tidak didefinisikan";
+    if (n === 0 || n === 1) return 1;
+    let result = 1;
+    for (let i = 2; i<= n; i++) {
+      result*=i;
+    }
+    return result;
+  }
   $("#btn-hitung").click(function () {
     input1 = parseInt($("#input1").text());
     input2 = parseInt($("#input2").text());
@@ -60,9 +73,24 @@ $(function () {
         hasil = input1 ^ input2;
     } else if (operasiSelected == "%") {
         hasil = input1 % input2;
-    } else {
+      } else if (operasiSelected == "!") {
+        // Operasi faktorial
+        hasil = `Faktorial dari ${input1} = ${factorial(
+          input1
+        )}, Faktorial dari ${input2} = ${factorial(input2)}`;
+      } else {  
       alert(`Belum ada handle untuk operasi ${operasiSelected}`);
     }
     $("#hasil").text(hasil);
   });
-});  
+  
+  $(".tombol-clear").click(function () {
+    input1 = null;
+    input2 = null;
+    operasiSelected = null;
+    $("#input1").text("...");
+    $("#input2").text("...");
+    $("#operasi-selected").text("...");
+    $("#hasil").text("......");
+  });
+});
